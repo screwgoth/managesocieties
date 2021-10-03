@@ -20,7 +20,7 @@ docker-compose logs -f
 
 * Usually, when you run it for the first time, you will see a Python error of not being able to connect to the MySQL DB. This is because MySQL takes a little longer to be up and running the first time. Just restart the containers
 ```
-docker-compose restart
+docker-compose restart backend
 ```
 
 * Make and run migrations
