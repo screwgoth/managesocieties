@@ -14,3 +14,15 @@ class Society(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class Building(models.Model):
+	society = models.ForeignKey(Society, on_delete=models.CASCADE)
+	building_name = models.CharField(max_length=100)
+	num_floors = models.IntegerField()
+	num_apartments = models.IntegerField()
+
+	# building_photo = models.ImageField(upload_to='building_photos/')
+	# members = models.ManyToManyField('auth.User', related_name='buildings')
+
+	def __str__(self):
+		return self.name
