@@ -13,7 +13,7 @@ class Society(models.Model):
 	# members = models.ManyToManyField('auth.User', related_name='societies')
 
 	def __str__(self):
-		return self.name
+		return self.society_name
 
 class Building(models.Model):
 	society = models.ForeignKey(Society, on_delete=models.CASCADE)
@@ -25,4 +25,4 @@ class Building(models.Model):
 	# members = models.ManyToManyField('auth.User', related_name='buildings')
 
 	def __str__(self):
-		return self.name
+		return self.building_name

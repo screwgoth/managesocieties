@@ -1,10 +1,13 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
+from .permissions import IsLoggedInUserOrAdmin, IsAdminUser
 
 from .models import Society, Building
 from .serializers import SocietySerializer, BuildingSerializer
 
 class SocietyViewSet(viewsets.ModelViewSet):
+	queryset = Society.objects.all()
+	serializer_class = SocietySerializer
 	
 	def list(self, request):
 		society = Society.objects.all()
@@ -34,8 +37,18 @@ class SocietyViewSet(viewsets.ModelViewSet):
 		society = Society.objects.get(id=pk)
 		society.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+	
+	def get_permissions(self):
+		permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+		if self.action == 'list':
+			permission_classes = [permissions.AllowAny]
+
+		return [permission() for permission in permission_classes]
 
 class BuildingViewSet(viewsets.ModelViewSet):
+
+	queryset = Building.objects.all()
+	serializer_class = BuildingSerializer
 	
 	def list(self, request):
 		building = Building.objects.all()
@@ -64,4 +77,11 @@ class BuildingViewSet(viewsets.ModelViewSet):
 		building = Building.objects.get(id=pk)
 		building.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+	def get_permissions(self):
+		permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+		if self.action == 'list':
+			permission_classes = [permissions.AllowAny]
+			
+		return [permission() for permission in permission_classes]
 	
