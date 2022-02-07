@@ -8,7 +8,27 @@ git clone git@github.com:screwgoth/managesocieties.git
 cd managesocieties
 ```
 
-* Run it with Docker
+* Create a virtual env when developing
+
+* Install the dependencies
+```
+pip install -r requirements.txt
+```
+
+* Run the DB migrations
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+* Run the development server on poere 8000
+```
+python manage.py runserver 0.0.0.0:8000
+```
+
+* When deploying to a non-development environment, update the `DATABASES` section in `settings.py` to point to a SQL database.
+
+* Steps to run with Docker
 ```
 docker-compose up --build -d
 ```
@@ -40,13 +60,23 @@ So, you can test it by using a REST client like Postman or `curl` or any other R
 
 ---
 ## Verification
+* Create an Admin user
+```
+python manage.py createsuperuser
+```
+* Enter details like Username, Email, password, etc.
+
+* Login to Admin dashboard at http://localhost:8000/admin
+
+* You can also verify the RESTful API by visitng: http://localhost:8000/api/v1/
+
 - GET list of societies
 	- GET request
-	- URL : http://localhost:8000/api/societies/
+	- URL : http://localhost:8000/api/v1/societies/
 
 - Add a Society
 	- POST request
-	- URL : https://localhost:8000/api/societies
+	- URL : https://localhost:8000/api/v1/societies/
 	- JSON Body : 
 	```
 	{
@@ -59,3 +89,4 @@ So, you can test it by using a REST client like Postman or `curl` or any other R
 		"country": "India"
 	}
 	```
+* Similar APIs can be used for `users` and `buildings`
